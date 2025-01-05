@@ -29,8 +29,8 @@ If both `ical_url` and `ical_file` are provided, the url will be prioritised.
 
 Duplicates are checked by name, description and due date against tasks with a label within `todoist_label`.
 
----
+### Personal Setup
 
-To use with Microsoft Shifts for Teams I used the Power Automate example "Forward my Shifts Schedule to my calendar" with trigger replaced with "When a Shift is created, updated or deleted" and final node replaced with "Update file" from OneDrive for Business, pointing at a .ical file shared publicly with a link and file content set to Response.
+So I could use it with Microsoft Shifts for Teams I copied the Power Automate example "Forward my Shifts Schedule to my calendar" with the trigger replaced with "When a Shift is created, updated or deleted" and final node replaced with "Update file" from OneDrive for Business pointing at a .ical file shared publicly with a link and file content set to Response.
 
 This file can be accessed raw by copying the share link and adding "&download=1" to the end.
