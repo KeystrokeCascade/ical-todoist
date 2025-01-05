@@ -1,0 +1,9 @@
+ical_url:
+ical_file: 'C:\Users\<User>\Documents\calendar.ical'
+todoist_api_key: '<API key here>'
+todoist_project:
+todoist_section:
+todoist_parent:
+todoist_labels: ['Shifts']
+allow_duplicates: false
+dry_run: false
