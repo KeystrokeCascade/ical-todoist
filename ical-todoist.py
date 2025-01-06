@@ -36,6 +36,7 @@ class Event:
 		return f'Name: {self.name}\nDesc: {self.description}\nDate:{self.due_date}'
 
 events = []
+to_remove = []
 for event in cal.walk('VEVENT'):
 	new_event = Event()
 	new_event.name = event.get('SUMMARY').strip()
@@ -49,26 +50,43 @@ events[:] = [x for x in events if x.due_date > datetime.now().astimezone()]
 
 api = TodoistAPI(CONFIG['todoist_api_key'])
 
-# Remove duplicates
-if not CONFIG['allow_duplicates']: 
+if (not CONFIG['allow_duplicates']) or CONFIG['allow_sync']:
 	try:
 		tasks = api.get_tasks(label=CONFIG['todoist_labels'])
 	except Exception as error:
 		print(error)
-	
-	def deduplicate(e):
-		for task in tasks:
-			if (e.name == task.content
-			and e.description == task.description
-			and e.due_date.astimezone() == datetime.fromisoformat(task.due.datetime).astimezone()):
-				return False
-		return True
-	events = list(filter(deduplicate, events))
+
+	# Find tasks not present
+	if CONFIG['allow_sync']:
+		def removed_tasks(t):
+			for event in events:
+				if (event.name == t.content
+				and event.description == t.description
+				and event.due_date.astimezone() == datetime.fromisoformat(t.due.datetime).astimezone()):
+					return False
+			return True
+		to_remove = list(filter(removed_tasks, tasks))
+
+	# Remove duplicates
+	if not CONFIG['allow_duplicates']:
+		def deduplicate(e):
+			for task in tasks:
+				if (e.name == task.content
+				and e.description == task.description
+				and e.due_date.astimezone() == datetime.fromisoformat(task.due.datetime).astimezone()):
+					return False
+			return True
+		events = list(filter(deduplicate, events))
 
 # Dry run
 if CONFIG['dry_run']:
+	print('Adding:')
 	for event in events:
 		print(event)
+	print()
+	print('Removing:')
+	for task in to_remove:
+		print(task)
 	exit(0)
 
 # Push to Todoist
@@ -82,5 +100,11 @@ for event in events:
 			parent_id=CONFIG['todoist_parent'],
 			labels=CONFIG['todoist_labels'],
 			due_datetime=str(event.due_date))
+	except Exception as error:
+		print(error)
+
+for task in to_remove:
+	try:
+		api.delete_task(task_id=task.id)
 	except Exception as error:
 		print(error)

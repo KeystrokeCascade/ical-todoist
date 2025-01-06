@@ -22,7 +22,8 @@ cp config.yaml.sample config.yaml
 | `todoist_section` 	| String 		| Parent section ID.  If not set task will not be put in a section |
 | `todoist_parent` 		| String	 	| Parent task ID.  If not set task will be put at the top level |
 | `todoist_labels`		| String Array 	| Labels to assign to generated tasks |
-| `allow_duplicates`	| Boolean 		| Allow duplicate tasks to be uploaded.  Recommended to set to `true` if `todoist_label` is not set |
+| `allow_sync`			| Boolean 		| Allow tasks no longer present to be deleted.  WARNING: DESTRUCTIVE!  HIGHLY recommended to set to `false` if `todoist_labels` is not set |
+| `allow_duplicates`	| Boolean 		| Allow duplicate tasks to be uploaded.  Recommended to set to `true` if `todoist_labels` is not set |
 | `dry_run`				| Boolean 		| Prints out tasks to create to console instead of creating them |
 
 If both `ical_url` and `ical_file` are provided, the url will be prioritised.
