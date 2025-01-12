@@ -4,6 +4,7 @@ from pathlib import Path
 from requests import get
 from icalendar import Calendar
 from datetime import datetime
+from dateutil import parser
 from markdownify import markdownify
 from todoist_api_python.api import TodoistAPI
 
@@ -62,7 +63,7 @@ if (not CONFIG['allow_duplicates']) or CONFIG['allow_sync']:
 			for event in events:
 				if (event.name == t.content
 				and event.description == t.description
-				and event.due_date.astimezone() == datetime.fromisoformat(t.due.datetime).astimezone()):
+				and event.due_date.astimezone() == parser.isoparse(t.due.datetime).astimezone()):
 					return False
 			return True
 		to_remove = list(filter(removed_tasks, tasks))
@@ -73,7 +74,7 @@ if (not CONFIG['allow_duplicates']) or CONFIG['allow_sync']:
 			for task in tasks:
 				if (e.name == task.content
 				and e.description == task.description
-				and e.due_date.astimezone() == datetime.fromisoformat(task.due.datetime).astimezone()):
+				and e.due_date.astimezone() == parser.isoparse(task.due.datetime).astimezone()):
 					return False
 			return True
 		events = list(filter(deduplicate, events))
