@@ -3,12 +3,16 @@ A small script that can read an ical file from a link or filesystem and push its
 
 ---
 
-Requres PyYAML, icalendar, todoist-api-python and markdownify libraries.
-
 To get started, copy `config.yaml.sample` into `config.yaml` if you want to use a template.
 
 ```
 cp config.yaml.sample config.yaml
+```
+
+To run, use uv
+
+```
+uv run main.py
 ```
 
 ## Config File Parameters
