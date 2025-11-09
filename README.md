@@ -12,7 +12,7 @@ cp config.yaml.sample config.yaml
 To run, use uv
 
 ```
-uv run main.py
+uv run ical-todoist.py
 ```
 
 ## Config File Parameters
