@@ -9,7 +9,7 @@ To get started, copy `config.yaml.sample` into `config.yaml` if you want to use 
 cp config.yaml.sample config.yaml
 ```
 
-To run, use uv
+To run, use uv.
 
 ```
 uv run ical-todoist.py
