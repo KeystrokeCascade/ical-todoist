@@ -41,7 +41,7 @@ def main():
 	for event in cal.walk('VEVENT'):
 		new_event = Event()
 		new_event.name = event.get('SUMMARY').strip()
-		new_event.description = markdownify(event.get('X-ALT-DESC')).strip().replace('\n\n', ' ') # Idk why I have to do this but I do since markdownify updated
+		new_event.description = markdownify(event.get('X-ALT-DESC')).strip() #.replace('\n\n', ' ') # Idk why I have to do this but I do since markdownify updated
 		new_event.due_date = event.get('DTSTART').dt
 		events.append(new_event)
 
@@ -106,7 +106,7 @@ def main():
 				section_id=CONFIG['todoist_section'],
 				parent_id=CONFIG['todoist_parent'],
 				labels=CONFIG['todoist_labels'],
-				due_datetime=str(event.due_date))
+				due_datetime=event.due_date)
 		except Exception as error:
 			print(error)
 
